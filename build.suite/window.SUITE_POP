@@ -1,0 +1,44 @@
+window.SUITE_POP = {
+
+    active: false,
+    message: "",
+    response: "",
+    color: "#0f0",
+
+    // 7-Response-Farben / Styles
+    styles: {
+        OK:    "#00ff00",
+        NOK:   "#ff0000",
+        FLOW:  "#00ffff",
+        BREAK: "#ff8800",
+        ECHO:  "#8888ff",
+        VOID:  "#444444",
+        ROOT:  "#ffffff"
+    },
+
+    open(msg, resp) {
+        this.active = true;
+        this.message = msg;
+        this.response = resp;
+
+        // Farbe passend zum Response
+        this.color = this.styles[resp] || "#0f0";
+    },
+
+    close() {
+        this.active = false;
+    },
+
+    render() {
+        const box = document.getElementById("popup");
+        if (!this.active) {
+            box.style.display = "none";
+            return;
+        }
+
+        box.innerText = `${this.response}: ${this.message}`;
+        box.style.display = "block";
+        box.style.borderColor = this.color;
+        box.style.color = this.color;
+    }
+};
