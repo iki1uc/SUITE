@@ -2,90 +2,896 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>BEN • UNI‑RESPO Engine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUITE · HOLIDAY · LIVE · MIND · BRAIN · POP</title>
 
 <style>
+:root {
+    --bg: #0a0a12;
+    --fg: #0f0;
+    --gold: #ffd700;
+    --ok: #4f4;
+    --nok: #f44;
+    --flow: #4ff;
+    --break: #f4f;
+    --echo: #ff4;
+    --void: #666;
+    --root: #ffd700;
+    --holiday: #ff69b4;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  background:#000;
-  color:#eee;
-  font-family:Consolas, monospace;
-  padding:20px;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Consolas', monospace;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 6px;
+    padding: 10px;
 }
-h1,h2 {
-  color:#00e0ff;
-  text-shadow:0 0 10px #00e0ff;
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: 6px;
+    flex-wrap: wrap;
+    gap: 4px;
 }
-.block {
-  border:1px solid #00e0ff;
-  padding:15px;
-  margin:20px 0;
-  border-radius:8px;
-  background:#111;
+header h1 {
+    font-size: 16px;
+    color: var(--gold);
+    letter-spacing: 3px;
 }
-.matrix {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:10px;
+header h1 .holiday { color: var(--holiday); }
+header h1 .suite { color: var(--flow); }
+header h1 .pop { color: var(--echo); }
+#info-bar { font-size: 9px; color: #666; display: flex; gap: 8px; align-items: center; }
+
+main {
+    display: grid;
+    grid-template-columns: 3fr 1.2fr;
+    gap: 6px;
+    height: 100%;
+    min-height: 0;
 }
-.axis8 {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:10px;
+
+#canvas-wrap {
+    background: #0a0a0f;
+    border: 1px solid #1a1a2a;
+    border-radius: 10px;
+    padding: 6px;
+    position: relative;
+    overflow: hidden;
 }
-.cell {
-  padding:10px;
-  background:#222;
-  border:1px solid #333;
-  text-align:center;
-  border-radius:6px;
+#canvas-wrap canvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    display: block;
 }
-.scanbox {
-  background:#222;
-  border:1px solid #444;
-  padding:10px;
-  margin-top:10px;
+#canvas-overlay {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    font-size: 7px;
+    color: #444;
+    pointer-events: none;
+    background: rgba(0,0,0,0.7);
+    padding: 3px 8px;
+    border-radius: 3px;
 }
-.verify {
-  background:#1a1a1a;
-  border:1px solid #5500ff;
-  padding:10px;
-  margin-top:10px;
+#canvas-overlay .holiday { color: var(--holiday); }
+
+#panel {
+    background: #0a0a0f;
+    border: 1px solid #1a1a2a;
+    border-radius: 10px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    overflow-y: auto;
+    max-height: 100%;
+}
+#panel h3 {
+    font-size: 9px;
+    color: #666;
+    border-bottom: 1px solid #1a1a2a;
+    padding-bottom: 3px;
+}
+
+#rooms {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+}
+.room-box {
+    background: rgba(255,255,255,0.02);
+    border-radius: 6px;
+    padding: 4px 6px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.04);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+.room-box:hover {
+    border-color: var(--gold);
+    background: rgba(255,215,61,0.05);
+}
+.room-box .sym { font-size: 16px; display: block; }
+.room-box .label { color: #666; font-size: 6px; text-transform: uppercase; letter-spacing: 1px; }
+.room-box .desc { color: #444; font-size: 5px; }
+.room-box.active { border-color: var(--gold); background: rgba(255,215,61,0.08); }
+
+#log {
+    flex: 1;
+    overflow-y: auto;
+    font-size: 7px;
+    color: #6a6a8a;
+    line-height: 1.3;
+    min-height: 30px;
+    max-height: 60px;
+    background: #06060a;
+    border-radius: 4px;
+    padding: 3px 5px;
+}
+#log .entry { padding: 1px 0; border-bottom: 1px solid #0a0a12; }
+#log .time { color: #444; }
+#log .msg.ok { color: var(--ok); }
+#log .msg.nok { color: var(--nok); }
+#log .msg.flow { color: var(--flow); }
+#log .msg.break { color: var(--break); }
+#log .msg.echo { color: var(--echo); }
+#log .msg.void { color: var(--void); }
+#log .msg.root { color: var(--root); }
+#log .msg.holiday { color: var(--holiday); }
+
+#metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 2px;
+}
+.metric {
+    background: #0e0e1a;
+    border-radius: 3px;
+    padding: 2px 3px;
+    text-align: center;
+    border: 1px solid #1a1a2a;
+}
+.metric .label { color: #666; font-size: 5px; text-transform: uppercase; }
+.metric .value { font-size: 9px; font-weight: bold; }
+.metric.ok .value { color: var(--ok); }
+.metric.flow .value { color: var(--flow); }
+.metric.echo .value { color: var(--echo); }
+.metric.holiday .value { color: var(--holiday); }
+
+#controls {
+    display: flex;
+    gap: 2px;
+    flex-wrap: wrap;
+}
+button {
+    background: #111;
+    color: var(--fg);
+    border: 1px solid #333;
+    padding: 3px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 8px;
+    transition: all 0.2s;
+}
+button:hover { background: #1a1a2a; border-color: var(--gold); }
+button:active { transform: scale(0.95); }
+button.primary { border-color: var(--gold); color: var(--gold); }
+button.primary:hover { background: var(--gold); color: #000; }
+button.ok { border-color: var(--ok); color: var(--ok); }
+button.ok:hover { background: var(--ok); color: #000; }
+button.nok { border-color: var(--nok); color: var(--nok); }
+button.nok:hover { background: var(--nok); color: #000; }
+button.flow { border-color: var(--flow); color: var(--flow); }
+button.flow:hover { background: var(--flow); color: #000; }
+button.root { border-color: var(--root); color: var(--root); }
+button.root:hover { background: var(--root); color: #000; }
+button.holiday { border-color: var(--holiday); color: var(--holiday); }
+button.holiday:hover { background: var(--holiday); color: #000; }
+button.danger { border-color: #f44; color: #f44; }
+button.danger:hover { background: #f44; color: #000; }
+
+/* POPUP */
+#popup {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0a0a12;
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    padding: 16px 24px;
+    min-width: 300px;
+    max-width: 600px;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 0 40px rgba(255,215,61,0.1);
+    font-size: 12px;
+    color: var(--fg);
+    backdrop-filter: blur(10px);
+}
+#popup .close-btn {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    color: #666;
+    cursor: pointer;
+    font-size: 14px;
+}
+#popup .close-btn:hover { color: #fff; }
+
+@media (max-width: 800px) {
+    main { grid-template-columns: 1fr; }
+    #panel { max-height: 180px; }
+    #rooms { grid-template-columns: 1fr 1fr; }
 }
 </style>
 </head>
-
 <body>
 
-<h1>BEN‑RESPO • UNI‑RESPO • WELT‑RESPO</h1>
+<header>
+    <h1>
+        <span class="holiday">🏖️ HOLIDAY</span>
+        <span style="color:#666;">·</span>
+        <span class="suite">SUITE</span>
+        <span style="color:#666;">·</span>
+        <span class="pop">POP</span>
+    </h1>
+    <div id="info-bar">
+        <span id="clock">⏱️ --:--:--</span>
+        <span id="state-display" style="color:var(--gold);">● bereit</span>
+        <span id="cycle-display" style="color:#666;">SUITE 0</span>
+    </div>
+</header>
 
-<!-- FUNKTION.matrix -->
-<div class="block">
-  <h2>FUNKTION.matrix</h2>
-  <p>Achsen: TMP / TRANS / WARB<br>
-     Felder: WLOCH / KANAL / GATE</p>
+<main>
+    <div id="canvas-wrap">
+        <canvas id="suiteCanvas"></canvas>
+        <div id="canvas-overlay">
+            <span class="holiday">🏖️</span> HOLIDAY · LIVE · MIND · BRAIN · POP
+        </div>
+    </div>
 
-  <div class="matrix">
-    <div class="cell">TMP.WLOCH</div>
-    <div class="cell">TMP.KANAL</div>
-    <div class="cell">TMP.GATE</div>
+    <div id="panel">
+        <h3>🎯 SUITE · ROOMS · POP</h3>
 
-    <div class="cell">TRANS.WLOCH</div>
-    <div class="cell">TRANS.KANAL</div>
-    <div class="cell">TRANS.GATE</div>
+        <div id="rooms">
+            <div class="room-box active" data-room="LIVE">
+                <span class="sym">🔴</span>
+                <span class="label">LIVE</span>
+                <span class="desc">Response-Layer</span>
+            </div>
+            <div class="room-box" data-room="MIND">
+                <span class="sym">🧠</span>
+                <span class="label">MIND</span>
+                <span class="desc">Gedanken</span>
+            </div>
+            <div class="room-box" data-room="BRAIN">
+                <span class="sym">💡</span>
+                <span class="label">BRAIN</span>
+                <span class="desc">Spiegelung</span>
+            </div>
+            <div class="room-box" data-room="POP">
+                <span class="sym">💬</span>
+                <span class="label">POP</span>
+                <span class="desc">Editor</span>
+            </div>
+        </div>
 
-    <div class="cell">WARB.WLOCH</div>
-    <div class="cell">WARB.KANAL</div>
-    <div class="cell">WARB.GATE</div>
-  </div>
+        <div id="metrics">
+            <div class="metric ok"><div class="label">OK</div><div class="value" id="ok-value">0</div></div>
+            <div class="metric flow"><div class="label">FLOW</div><div class="value" id="flow-value">0</div></div>
+            <div class="metric echo"><div class="label">ECHO</div><div class="value" id="echo-value">0</div></div>
+            <div class="metric holiday"><div class="label">POP</div><div class="value" id="pop-value">0</div></div>
+        </div>
+
+        <div id="log">
+            <div class="entry"><span class="time">[INIT]</span> <span class="msg holiday">🏖️ HOLIDAY · SUITE · POP</span></div>
+            <div class="entry"><span class="time">[INIT]</span> <span class="msg flow">LIVE · MIND · BRAIN · POP</span></div>
+            <div class="entry"><span class="time">[INIT]</span> <span class="msg ok">Response-Layer 7 bereit</span></div>
+        </div>
+
+        <div id="controls">
+            <button class="primary" id="btn-start">▶ START</button>
+            <button class="ok" id="btn-ok">✅ OK</button>
+            <button class="nok" id="btn-nok">❌ NOK</button>
+            <button class="flow" id="btn-flow">🌊 FLOW</button>
+            <button class="root" id="btn-root">🌳 ROOT</button>
+            <button class="holiday" id="btn-pop">💬 POP</button>
+            <button class="danger" id="btn-reset">⟲ RESET</button>
+            <button id="btn-auto">▶ AUTO</button>
+        </div>
+    </div>
+</main>
+
+<!-- POPUP -->
+<div id="popup">
+    <span class="close-btn" id="popup-close">✕</span>
+    <div id="popup-content">💬 POP · open.edit: Hallo Welt!</div>
 </div>
 
-<!-- BEN‑Axiom‑System -->
-<div class="block">
-  <h2>BEN‑Axiom‑System</h2>
-  <div class="matrix">
-    <div class="cell">BEN</div>
-    <div class="cell">BEN.tmp</div>
-    <div class="cell">BEN.trans</div>
+<script>
+// ============================================================
+// SUITE · HOLIDAY · LIVE · MIND · BRAIN · POP
+// ============================================================
 
-    <div class="cell">BEN.warb</div>
-    <div class="cell">BEN‑NC3×3</div>
+// --- LAYER 7 ---
+var LAYER7 = ['OK', 'NOK', 'FLOW', 'BREAK', 'ECHO', 'VOID', 'ROOT'];
+var RESPONSES = {
+    OK:    { sym: '✅', label: 'OK',    desc: 'Zustimmung',   color: '#4f4', class: 'ok' },
+    NOK:   { sym: '❌', label: 'NOK',   desc: 'Ablehnung',    color: '#f44', class: 'nok' },
+    FLOW:  { sym: '🌊', label: 'FLOW',  desc: 'System fließt', color: '#4ff', class: 'flow' },
+    BREAK: { sym: '💥', label: 'BREAK', desc: 'System bricht', color: '#f4f', class: 'break' },
+    ECHO:  { sym: '🔄', label: 'ECHO',  desc: 'Spiegelung',   color: '#ff4', class: 'echo' },
+    VOID:  { sym: '◌',  label: 'VOID',  desc: 'Neutral',      color: '#666', class: 'void' },
+    ROOT:  { sym: '🌳', label: 'ROOT',  desc: 'Rückkehr',     color: '#ffd700', class: 'root' }
+};
+
+// --- SUITE_BOARD ---
+var SUITE_BOARD = {
+    rooms: {},
+    activeRoom: 'LIVE',
+    response: 'OK',
+    tick: 0,
+
+    register: function(name, obj) {
+        this.rooms[name] = obj;
+        console.log('📦 SUITE_BOARD: ' + name + ' registriert');
+    },
+
+    get: function(name) {
+        return this.rooms[name] || null;
+    },
+
+    setActive: function(name) {
+        if (this.rooms[name]) {
+            this.activeRoom = name;
+        }
+    },
+
+    update: function(dt) {
+        this.tick += dt;
+        var room = this.get(this.activeRoom);
+        if (room && room.update) {
+            room.update(dt);
+        }
+        // Response rotieren
+        var idx = Math.floor(this.tick) % 7;
+        this.response = LAYER7[idx];
+    },
+
+    render: function() {
+        var room = this.get(this.activeRoom);
+        if (room && room.render) {
+            return room.render();
+        }
+        return { mode: this.activeRoom, response: this.response };
+    }
+};
+
+// --- LIVE.room ---
+var LIVE_ROOM = {
+    active: false,
+    tick: 0,
+    response: 'ROOT',
+
+    start: function() { this.active = true; this.tick = 0; },
+    stop: function() { this.active = false; },
+    update: function(dt) {
+        if (!this.active) return;
+        this.tick += dt;
+        this.response = LAYER7[Math.floor(this.tick) % 7];
+    },
+    render: function() {
+        return { mode: 'LIVE.room', tick: this.tick, response: this.response };
+    }
+};
+SUITE_BOARD.register('LIVE', LIVE_ROOM);
+
+// --- MIND.room ---
+var MIND_ROOM = {
+    active: false,
+    thought: '',
+    response: 'ROOT',
+
+    start: function() { this.active = true; this.thought = 'mind.init'; },
+    stop: function() { this.active = false; },
+    think: function(input) {
+        if (!this.active) return;
+        this.thought = 'mind:' + input;
+        var idx = input.length % 7;
+        this.response = LAYER7[idx];
+    },
+    render: function() {
+        return { mode: 'mind.room', thought: this.thought, response: this.response };
+    }
+};
+SUITE_BOARD.register('MIND', MIND_ROOM);
+
+// --- BRAIN.room ---
+var BRAIN_ROOM = {
+    active: false,
+    input: '',
+    output: '',
+    response: 'ROOT',
+
+    start: function() { this.active = true; this.output = 'brain.init'; },
+    stop: function() { this.active = false; },
+    process: function(input) {
+        if (!this.active) return;
+        this.input = input;
+        this.output = 'brain:' + input.split('').reverse().join('');
+        var sum = 0;
+        for (var i = 0; i < input.length; i++) {
+            sum += input.charCodeAt(i);
+        }
+        this.response = LAYER7[sum % 7];
+    },
+    render: function() {
+        return { mode: 'brain.room', input: this.input, output: this.output, response: this.response };
+    }
+};
+SUITE_BOARD.register('BRAIN', BRAIN_ROOM);
+
+// --- SUITE_POP ---
+var SUITE_POP = {
+    active: false,
+    editing: false,
+    original: '',
+    workingCopy: '',
+    response: '',
+    color: '#0f0',
+    styles: {
+        OK: '#00ff00',
+        NOK: '#ff0000',
+        FLOW: '#00ffff',
+        BREAK: '#ff8800',
+        ECHO: '#8888ff',
+        VOID: '#444444',
+        ROOT: '#ffffff'
+    },
+
+    openEdit: function(msg, resp) {
+        this.active = true;
+        this.editing = true;
+        this.original = msg;
+        this.workingCopy = msg;
+        this.response = resp || 'OK';
+        this.color = this.styles[this.response] || '#0f0';
+        this.renderPopup();
+        document.getElementById('popup').style.display = 'block';
+    },
+
+    edit: function(fn) {
+        if (!this.editing) return;
+        this.workingCopy = fn(this.workingCopy);
+        this.renderPopup();
+    },
+
+    closeEdit: function() {
+        this.active = false;
+        this.editing = false;
+        document.getElementById('popup').style.display = 'none';
+    },
+
+    renderPopup: function() {
+        var box = document.getElementById('popup-content');
+        var mode = this.editing ? '✏️ open.edit' : '📋 closed.edit';
+        var text = this.editing ? this.workingCopy : this.original;
+        box.textContent = this.response + ' / ' + mode + ': ' + text;
+        box.style.color = this.color;
+    }
+};
+SUITE_BOARD.register('POP', SUITE_POP);
+
+// ============================================================
+// CANVAS SETUP
+// ============================================================
+var canvas = document.getElementById('suiteCanvas');
+var ctx = canvas.getContext('2d');
+var W, H, cx, cy, radius;
+
+function resizeCanvas() {
+    var wrap = document.getElementById('canvas-wrap');
+    var rect = wrap.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    W = canvas.width; H = canvas.height;
+    cx = W / 2; cy = H / 2;
+    radius = Math.min(W, H) * 0.38;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+// ============================================================
+// STATE
+// ============================================================
+var state = {
+    running: false,
+    autoMode: false,
+    cycle: 0,
+    t: 0,
+    activeRoom: 'LIVE',
+    board: SUITE_BOARD,
+    popCount: 0
+};
+
+// ============================================================
+// LOG
+// ============================================================
+function log(msg, type) {
+    var logDiv = document.getElementById('log');
+    var entry = document.createElement('div');
+    entry.className = 'entry';
+    var time = new Date().toLocaleTimeString();
+    var cls = type === 'ok' ? 'ok' : type === 'nok' ? 'nok' :
+              type === 'flow' ? 'flow' : type === 'break' ? 'break' :
+              type === 'echo' ? 'echo' : type === 'void' ? 'void' :
+              type === 'root' ? 'root' : type === 'holiday' ? 'holiday' : '';
+    entry.innerHTML = '<span class="time">[' + time + ']</span> <span class="msg ' + cls + '">' + msg + '</span>';
+    logDiv.appendChild(entry);
+    logDiv.scrollTop = logDiv.scrollHeight;
+    while (logDiv.children.length > 50) logDiv.removeChild(logDiv.firstChild);
+}
+
+// ============================================================
+// KERN-FUNKTIONEN
+// ============================================================
+
+function activateRoom(key) {
+    state.activeRoom = key;
+    state.board.setActive(key);
+    var els = document.querySelectorAll('.room-box');
+    for (var i = 0; i < els.length; i++) {
+        var el = els[i];
+        if (el.getAttribute('data-room') === key) {
+            el.classList.add('active');
+        } else {
+            el.classList.remove('active');
+        }
+    }
+
+    // Raum starten
+    var room = state.board.get(key);
+    if (room && room.start) {
+        room.start();
+    }
+
+    var msg = '🏖️ ' + key + '.room aktiv';
+    log(msg, 'holiday');
+
+    // Metriken
+    var counts = { OK: 0, FLOW: 0, ECHO: 0, POP: 0 };
+    var resp = state.board.response || 'OK';
+    counts[resp] = (counts[resp] || 0) + 1;
+    document.getElementById('ok-value').textContent = counts.OK;
+    document.getElementById('flow-value').textContent = counts.FLOW;
+    document.getElementById('echo-value').textContent = counts.ECHO;
+    document.getElementById('pop-value').textContent = state.popCount;
+}
+
+function popOpen() {
+    state.popCount++;
+    var msgs = ['Hallo Welt!', '🏖️ Holiday Time!', '💬 POP ist da!', '🧠 MIND sagt Hallo!', '💡 BRAIN leuchtet!'];
+    var msg = msgs[state.popCount % msgs.length];
+    var resp = LAYER7[state.popCount % 7];
+    SUITE_POP.openEdit(msg, resp);
+    log('💬 POP geöffnet: ' + msg, 'echo');
+    document.getElementById('pop-value').textContent = state.popCount;
+}
+
+function popClose() {
+    SUITE_POP.closeEdit();
+    log('💬 POP geschlossen', 'echo');
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function render() {
+    ctx.clearRect(0, 0, W, H);
+
+    var grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, W * 0.6);
+    grad.addColorStop(0, '#0a0a1a');
+    grad.addColorStop(1, '#000');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    drawRooms();
+    drawLayer7();
+    drawResponse();
+
+    state.t += 0.008;
+    if (state.running) {
+        state.cycle++;
+        state.board.update(0.016);
+        if (state.cycle % 50 === 0) {
+            var rooms = ['LIVE', 'MIND', 'BRAIN', 'POP'];
+            var idx = Math.floor(Math.random() * rooms.length);
+            activateRoom(rooms[idx]);
+        }
+        document.getElementById('cycle-display').textContent = 'SUITE ' + state.cycle;
+    }
+
+    requestAnimationFrame(render);
+}
+render();
+
+// ============================================================
+// ZEICHEN-FUNKTIONEN
+// ============================================================
+
+function drawRooms() {
+    var r = radius * 0.4;
+    var rooms = ['LIVE', 'MIND', 'BRAIN', 'POP'];
+    var colors = ['#ff6b6b', '#ffd93d', '#6b6bff', '#ff69b4'];
+    var syms = ['🔴', '🧠', '💡', '💬'];
+
+    for (var i = 0; i < rooms.length; i++) {
+        var angle = (i / rooms.length) * Math.PI * 2 + state.t * 0.02;
+        var x = cx + Math.cos(angle) * r;
+        var y = cy + Math.sin(angle) * r;
+        var isActive = rooms[i] === state.activeRoom;
+
+        ctx.fillStyle = isActive ? colors[i] + '44' : colors[i] + '11';
+        ctx.shadowColor = isActive ? colors[i] : 'transparent';
+        ctx.shadowBlur = isActive ? 15 : 0;
+        ctx.beginPath();
+        ctx.arc(x, y, isActive ? 20 : 10, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        ctx.fillStyle = isActive ? colors[i] : '#444';
+        ctx.font = isActive ? '16px Consolas' : '12px Consolas';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(syms[i], x, y - 12);
+
+        ctx.fillStyle = isActive ? colors[i] : '#333';
+        ctx.font = isActive ? '5px Consolas' : '4px Consolas';
+        ctx.textBaseline = 'top';
+        ctx.fillText(rooms[i], x, y + 14);
+    }
+
+    // Verbindungen
+    ctx.strokeStyle = 'rgba(255,215,61,0.03)';
+    ctx.lineWidth = 0.5;
+    for (var i = 0; i < rooms.length; i++) {
+        var a = (i / rooms.length) * Math.PI * 2 + state.t * 0.02;
+        var x1 = cx + Math.cos(a) * r;
+        var y1 = cy + Math.sin(a) * r;
+        for (var j = i + 1; j < rooms.length; j++) {
+            var b = (j / rooms.length) * Math.PI * 2 + state.t * 0.02;
+            var x2 = cx + Math.cos(b) * r;
+            var y2 = cy + Math.sin(b) * r;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+        }
+    }
+}
+
+function drawLayer7() {
+    var r = radius * 0.7;
+    var n = 7;
+    var colors = ['#4f4', '#f44', '#4ff', '#f4f', '#ff4', '#666', '#ffd700'];
+    var labels = ['OK', 'NOK', 'FLOW', 'BREAK', 'ECHO', 'VOID', 'ROOT'];
+
+    for (var i = 0; i < n; i++) {
+        var angle = (i / n) * Math.PI * 2 + state.t * 0.01;
+        var x = cx + Math.cos(angle) * r;
+        var y = cy + Math.sin(angle) * r;
+        var isActive = labels[i] === state.board.response;
+
+        ctx.fillStyle = isActive ? colors[i] + '44' : colors[i] + '11';
+        ctx.shadowColor = isActive ? colors[i] : 'transparent';
+        ctx.shadowBlur = isActive ? 10 : 0;
+        ctx.beginPath();
+        ctx.arc(x, y, isActive ? 6 : 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        ctx.fillStyle = isActive ? colors[i] : '#333';
+        ctx.font = isActive ? '5px Consolas' : '4px Consolas';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(labels[i], x, y - 6);
+    }
+
+    ctx.fillStyle = 'rgba(255,215,61,0.03)';
+    ctx.font = '5px Consolas';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillText('Layer 7', cx, cy + r + 8);
+}
+
+function drawResponse() {
+    var resp = state.board.response || 'OK';
+    var r = RESPONSES[resp] || RESPONSES.OK;
+    var cr = radius * 0.1;
+
+    ctx.fillStyle = r.color + '22';
+    ctx.shadowColor = r.color;
+    ctx.shadowBlur = 20;
+    ctx.beginPath();
+    ctx.arc(cx, cy, cr + 15, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = r.color;
+    ctx.shadowColor = r.color;
+    ctx.shadowBlur = 30;
+    ctx.font = '32px Consolas';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(r.sym, cx, cy - 2);
+    ctx.shadowBlur = 0;
+
+    ctx.fillStyle = '#666';
+    ctx.font = '6px Consolas';
+    ctx.textBaseline = 'top';
+    ctx.fillText(r.label + ' · ' + r.desc, cx, cy + 28);
+
+    // Status
+    ctx.fillStyle = 'rgba(255,255,255,0.02)';
+    ctx.fillRect(8, 8, 80, 14);
+    ctx.fillStyle = '#444';
+    ctx.font = '4px Consolas';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText('▶ ' + state.activeRoom, 12, 10);
+}
+
+// ============================================================
+// CONTROLS
+// ============================================================
+document.getElementById('btn-start').onclick = function() {
+    state.running = !state.running;
+    this.textContent = state.running ? '⏸ STOP' : '▶ START';
+    document.getElementById('state-display').textContent = state.running ? '● läuft' : '● gestoppt';
+    document.getElementById('state-display').style.color = state.running ? 'var(--gold)' : '#666';
+    if (state.running) {
+        var room = state.board.get(state.activeRoom);
+        if (room && room.start) room.start();
+        log('▶ SUITE gestartet', 'holiday');
+    } else {
+        log('⏸ SUITE gestoppt', 'holiday');
+    }
+};
+
+document.getElementById('btn-ok').onclick = function() {
+    state.board.response = 'OK';
+    log('✅ OK', 'ok');
+};
+document.getElementById('btn-nok').onclick = function() {
+    state.board.response = 'NOK';
+    log('❌ NOK', 'nok');
+};
+document.getElementById('btn-flow').onclick = function() {
+    state.board.response = 'FLOW';
+    log('🌊 FLOW', 'flow');
+};
+document.getElementById('btn-root').onclick = function() {
+    state.board.response = 'ROOT';
+    log('🌳 ROOT', 'root');
+};
+
+document.getElementById('btn-pop').onclick = function() {
+    popOpen();
+};
+
+document.getElementById('popup-close').onclick = function() {
+    popClose();
+};
+
+document.getElementById('btn-reset').onclick = function() {
+    state.running = false;
+    state.cycle = 0;
+    state.t = 0;
+    state.popCount = 0;
+    state.board.response = 'OK';
+    document.getElementById('btn-start').textContent = '▶ START';
+    document.getElementById('state-display').textContent = '● reset';
+    document.getElementById('state-display').style.color = '#f44';
+    document.getElementById('cycle-display').textContent = 'SUITE 0';
+    document.getElementById('ok-value').textContent = '0';
+    document.getElementById('flow-value').textContent = '0';
+    document.getElementById('echo-value').textContent = '0';
+    document.getElementById('pop-value').textContent = '0';
+    var els = document.querySelectorAll('.room-box');
+    for (var i = 0; i < els.length; i++) {
+        els[i].classList.remove('active');
+    }
+    document.querySelector('.room-box[data-room="LIVE"]').classList.add('active');
+    SUITE_POP.closeEdit();
+    log('⟲ RESET — SUITE zurückgesetzt', 'holiday');
+};
+
+document.getElementById('btn-auto').onclick = function() {
+    state.autoMode = !state.autoMode;
+    this.textContent = state.autoMode ? '⏸ PAUSE' : '▶ AUTO';
+    if (state.autoMode) {
+        state.running = true;
+        document.getElementById('btn-start').textContent = '⏸ STOP';
+        document.getElementById('state-display').textContent = '● auto';
+        document.getElementById('state-display').style.color = 'var(--gold)';
+        if (window.autoInterval) clearInterval(window.autoInterval);
+        window.autoInterval = setInterval(function() {
+            var rooms = ['LIVE', 'MIND', 'BRAIN', 'POP'];
+            var idx = Math.floor(Math.random() * rooms.length);
+            activateRoom(rooms[idx]);
+            if (rooms[idx] === 'POP') { popOpen(); }
+            log('🔄 ' + rooms[idx] + ' · ' + state.board.response, 'holiday');
+        }, 3000);
+        log('▶ AUTO · SUITE rotiert', 'holiday');
+    } else {
+        clearInterval(window.autoInterval);
+        log('⏸ AUTO pausiert', 'holiday');
+    }
+};
+
+// ============================================================
+// ROOM-KLICKS
+// ============================================================
+var roomEls = document.querySelectorAll('.room-box');
+for (var i = 0; i < roomEls.length; i++) {
+    roomEls[i].onclick = function() {
+        var key = this.getAttribute('data-room');
+        activateRoom(key);
+    };
+}
+
+// ============================================================
+// TASTATUR
+// ============================================================
+document.addEventListener('keydown', function(e) {
+    if (e.key === ' ') { e.preventDefault(); document.getElementById('btn-start').click(); }
+    if (e.key === '1') activateRoom('LIVE');
+    if (e.key === '2') activateRoom('MIND');
+    if (e.key === '3') activateRoom('BRAIN');
+    if (e.key === '4') { activateRoom('POP'); popOpen(); }
+    if (e.key === 'p') { popOpen(); }
+    if (e.key === 'x') document.getElementById('btn-reset').click();
+    if (e.key === 'a') document.getElementById('btn-auto').click();
+});
+
+// ============================================================
+// UHR
+// ============================================================
+function updateClock() {
+    document.getElementById('clock').textContent = '⏱️ ' + new Date().toLocaleTimeString();
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ============================================================
+// INIT
+// ============================================================
+log('🏖️ HOLIDAY · SUITE · POP geladen', 'holiday');
+log('📦 LIVE · MIND · BRAIN · POP', 'flow');
+log('⌨️  1=LIVE 2=MIND 3=BRAIN 4=POP  p=Pop  x=Reset  a=Auto', 'holiday');
+
+setTimeout(function() {
+    state.running = true;
+    document.getElementById('btn-start').textContent = '⏸ STOP';
+    document.getElementById('state-display').textContent = '● läuft';
+    document.getElementById('state-display').style.color = 'var(--gold)';
+    var room = state.board.get('LIVE');
+    if (room && room.start) room.start();
+    log('▶ SUITE automatisch gestartet · 🏖️ Holiday!', 'holiday');
+}, 500);
+</script>
+</body>
+</html>
