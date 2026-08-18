@@ -1,50 +1,61 @@
-// OPEN.room — LIVE Raum für SUITE
-// Status: ACTIVE
-// Rolle: Durchlassraum für WORK, FORK, SLI.raw, RESPO
+// OPEN.room — DEEP LIVE Raum für SUITE
+// Rolle: CAUSE → WHIRL → ID_UNIT → STREAM
+
+import { CAUSE } from "../build.suite/CAUSE.suite";
+import { WHIRL } from "../build.suite/WHIRL.suite";
+import { ID_UNIT } from "../ID_UNIT.js";
 
 export const OPEN_ROOM = {
 
     name: "OPEN.room",
+    active: true,
+
     state: {
-        active: true,
-        users: [],
+        agents: [],
+        actions: [],
         stream: [],
-        lastEvent: null
+        lastEvent: null,
+        cause: null,
+        whirl: null,
+        id: null
     },
 
-    // Nutzer betreten den Raum
-    enter(user) {
-        this.state.users.push(user);
-        this.state.lastEvent = `ENTER:${user}`;
+    // Agent betritt den Raum
+    enter(agent) {
+        this.state.agents.push(agent);
+        this.state.lastEvent = `ENTER:${agent}`;
         return this.state;
     },
 
-    // Nutzer verlassen den Raum
-    leave(user) {
-        this.state.users = this.state.users.filter(u => u !== user);
-        this.state.lastEvent = `LEAVE:${user}`;
+    // Agent verlässt den Raum
+    leave(agent) {
+        this.state.agents = this.state.agents.filter(a => a !== agent);
+        this.state.lastEvent = `LEAVE:${agent}`;
         return this.state;
     },
 
-    // Daten streamen (WORK, FORK, SLI, RESPO)
-    push(data) {
-        this.state.stream.push({
-            timestamp: Date.now(),
-            data
-        });
-        this.state.lastEvent = "STREAM";
-        return this.state;
+    // CAUSE ausführen
+    cause(input) {
+        const result = CAUSE(input);
+        this.state.cause = result;
+        this.state.lastEvent = "CAUSE";
+        return result;
     },
 
-    // Raumstatus abrufen
-    status() {
-        return {
-            name: this.name,
-            active: this.state.active,
-            users: this.state.users.length,
-            events: this.state.stream.length,
-            lastEvent: this.state.lastEvent
-        };
-    }
-};
+    // WHIRL rotieren
+    whirl() {
+        const result = WHIRL(this.state.cause);
+        this.state.whirl = result;
+        this.state.lastEvent = "WHIRL";
+        return result;
+    },
 
+    // ID‑Unit aktivieren
+    id() {
+        const result = ID_UNIT(this.state.whirl);
+        this.state.id = result;
+        this.state.lastEvent = "ID_UNIT";
+        return result;
+    },
+
+    // Stream aktual
