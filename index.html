@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SUITE · HOLIDAY · LIVE · MIND · BRAIN · POP</title>
+<title>SUITE · RESPO_81 · CSV · ENGINE</title>
 
 <style>
+/* ─── STIL ─── */
 :root {
     --bg: #0a0a12;
     --fg: #0f0;
@@ -19,222 +20,182 @@
     --root: #ffd700;
     --holiday: #ff69b4;
 }
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin:0; padding:0; box-sizing:border-box; }
 body {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: 'Consolas', monospace;
-    min-height: 100vh;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    gap: 6px;
-    padding: 10px;
+    background:var(--bg);
+    color:var(--fg);
+    font-family:'Consolas',monospace;
+    min-height:100vh;
+    display:grid;
+    grid-template-rows:auto 1fr auto;
+    gap:6px;
+    padding:10px;
 }
-
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 2px solid var(--gold);
-    padding-bottom: 6px;
-    flex-wrap: wrap;
-    gap: 4px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:2px solid var(--gold);
+    padding-bottom:6px;
+    flex-wrap:wrap;
+    gap:4px;
 }
-header h1 {
-    font-size: 16px;
-    color: var(--gold);
-    letter-spacing: 3px;
-}
-header h1 .holiday { color: var(--holiday); }
-header h1 .suite { color: var(--flow); }
-header h1 .pop { color: var(--echo); }
-#info-bar { font-size: 9px; color: #666; display: flex; gap: 8px; align-items: center; }
-
+header h1 { font-size:16px; color:var(--gold); letter-spacing:3px; }
+header h1 .holiday { color:var(--holiday); }
+header h1 .suite { color:var(--flow); }
+#info-bar { font-size:9px; color:#666; display:flex; gap:8px; align-items:center; }
 main {
-    display: grid;
-    grid-template-columns: 3fr 1.2fr;
-    gap: 6px;
-    height: 100%;
-    min-height: 0;
+    display:grid;
+    grid-template-columns:3fr 1.2fr;
+    gap:6px;
+    height:100%;
+    min-height:0;
 }
-
 #canvas-wrap {
-    background: #0a0a0f;
-    border: 1px solid #1a1a2a;
-    border-radius: 10px;
-    padding: 6px;
-    position: relative;
-    overflow: hidden;
+    background:#0a0a0f;
+    border:1px solid #1a1a2a;
+    border-radius:10px;
+    padding:6px;
+    position:relative;
+    overflow:hidden;
 }
 #canvas-wrap canvas {
-    width: 100%;
-    height: 100%;
-    border-radius: 6px;
-    display: block;
+    width:100%;
+    height:100%;
+    border-radius:6px;
+    display:block;
 }
-#canvas-overlay {
-    position: absolute;
-    bottom: 8px;
-    left: 8px;
-    font-size: 7px;
-    color: #444;
-    pointer-events: none;
-    background: rgba(0,0,0,0.7);
-    padding: 3px 8px;
-    border-radius: 3px;
-}
-#canvas-overlay .holiday { color: var(--holiday); }
-
 #panel {
-    background: #0a0a0f;
-    border: 1px solid #1a1a2a;
-    border-radius: 10px;
-    padding: 6px;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    overflow-y: auto;
-    max-height: 100%;
+    background:#0a0a0f;
+    border:1px solid #1a1a2a;
+    border-radius:10px;
+    padding:6px;
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+    overflow-y:auto;
+    max-height:100%;
 }
-#panel h3 {
-    font-size: 9px;
-    color: #666;
-    border-bottom: 1px solid #1a1a2a;
-    padding-bottom: 3px;
-}
-
+#panel h3 { font-size:9px; color:#666; border-bottom:1px solid #1a1a2a; padding-bottom:3px; }
 #rooms {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:3px;
 }
 .room-box {
-    background: rgba(255,255,255,0.02);
-    border-radius: 6px;
-    padding: 4px 6px;
-    text-align: center;
-    border: 1px solid rgba(255,255,255,0.04);
-    cursor: pointer;
-    transition: all 0.3s;
+    background:rgba(255,255,255,0.02);
+    border-radius:6px;
+    padding:4px 6px;
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.04);
+    cursor:pointer;
+    transition:all 0.3s;
 }
-.room-box:hover {
-    border-color: var(--gold);
-    background: rgba(255,215,61,0.05);
-}
-.room-box .sym { font-size: 16px; display: block; }
-.room-box .label { color: #666; font-size: 6px; text-transform: uppercase; letter-spacing: 1px; }
-.room-box .desc { color: #444; font-size: 5px; }
-.room-box.active { border-color: var(--gold); background: rgba(255,215,61,0.08); }
-
+.room-box:hover { border-color:var(--gold); background:rgba(255,215,61,0.05); }
+.room-box .sym { font-size:16px; display:block; }
+.room-box .label { color:#666; font-size:6px; text-transform:uppercase; letter-spacing:1px; }
+.room-box.active { border-color:var(--gold); background:rgba(255,215,61,0.08); }
 #log {
-    flex: 1;
-    overflow-y: auto;
-    font-size: 7px;
-    color: #6a6a8a;
-    line-height: 1.3;
-    min-height: 30px;
-    max-height: 60px;
-    background: #06060a;
-    border-radius: 4px;
-    padding: 3px 5px;
+    flex:1;
+    overflow-y:auto;
+    font-size:7px;
+    color:#6a6a8a;
+    line-height:1.3;
+    min-height:30px;
+    max-height:60px;
+    background:#06060a;
+    border-radius:4px;
+    padding:3px 5px;
 }
-#log .entry { padding: 1px 0; border-bottom: 1px solid #0a0a12; }
-#log .time { color: #444; }
-#log .msg.ok { color: var(--ok); }
-#log .msg.nok { color: var(--nok); }
-#log .msg.flow { color: var(--flow); }
-#log .msg.break { color: var(--break); }
-#log .msg.echo { color: var(--echo); }
-#log .msg.void { color: var(--void); }
-#log .msg.root { color: var(--root); }
-#log .msg.holiday { color: var(--holiday); }
-
+#log .entry { padding:1px 0; border-bottom:1px solid #0a0a12; }
+#log .time { color:#444; }
+#log .msg.ok { color:var(--ok); }
+#log .msg.nok { color:var(--nok); }
+#log .msg.flow { color:var(--flow); }
+#log .msg.break { color:var(--break); }
+#log .msg.echo { color:var(--echo); }
+#log .msg.void { color:var(--void); }
+#log .msg.root { color:var(--root); }
+#log .msg.holiday { color:var(--holiday); }
 #metrics {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 2px;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr 1fr;
+    gap:2px;
 }
 .metric {
-    background: #0e0e1a;
-    border-radius: 3px;
-    padding: 2px 3px;
-    text-align: center;
-    border: 1px solid #1a1a2a;
+    background:#0e0e1a;
+    border-radius:3px;
+    padding:2px 3px;
+    text-align:center;
+    border:1px solid #1a1a2a;
 }
-.metric .label { color: #666; font-size: 5px; text-transform: uppercase; }
-.metric .value { font-size: 9px; font-weight: bold; }
-.metric.ok .value { color: var(--ok); }
-.metric.flow .value { color: var(--flow); }
-.metric.echo .value { color: var(--echo); }
-.metric.holiday .value { color: var(--holiday); }
-
+.metric .label { color:#666; font-size:5px; text-transform:uppercase; }
+.metric .value { font-size:9px; font-weight:bold; }
+.metric.ok .value { color:var(--ok); }
+.metric.flow .value { color:var(--flow); }
+.metric.echo .value { color:var(--echo); }
+.metric.holiday .value { color:var(--holiday); }
 #controls {
-    display: flex;
-    gap: 2px;
-    flex-wrap: wrap;
+    display:flex;
+    gap:2px;
+    flex-wrap:wrap;
 }
 button {
-    background: #111;
-    color: var(--fg);
-    border: 1px solid #333;
-    padding: 3px 10px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 8px;
-    transition: all 0.2s;
+    background:#111;
+    color:var(--fg);
+    border:1px solid #333;
+    padding:3px 10px;
+    border-radius:4px;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:8px;
+    transition:all 0.2s;
 }
-button:hover { background: #1a1a2a; border-color: var(--gold); }
-button:active { transform: scale(0.95); }
-button.primary { border-color: var(--gold); color: var(--gold); }
-button.primary:hover { background: var(--gold); color: #000; }
-button.ok { border-color: var(--ok); color: var(--ok); }
-button.ok:hover { background: var(--ok); color: #000; }
-button.nok { border-color: var(--nok); color: var(--nok); }
-button.nok:hover { background: var(--nok); color: #000; }
-button.flow { border-color: var(--flow); color: var(--flow); }
-button.flow:hover { background: var(--flow); color: #000; }
-button.root { border-color: var(--root); color: var(--root); }
-button.root:hover { background: var(--root); color: #000; }
-button.holiday { border-color: var(--holiday); color: var(--holiday); }
-button.holiday:hover { background: var(--holiday); color: #000; }
-button.danger { border-color: #f44; color: #f44; }
-button.danger:hover { background: #f44; color: #000; }
-
-/* POPUP */
+button:hover { background:#1a1a2a; border-color:var(--gold); }
+button.primary { border-color:var(--gold); color:var(--gold); }
+button.primary:hover { background:var(--gold); color:#000; }
+button.ok { border-color:var(--ok); color:var(--ok); }
+button.ok:hover { background:var(--ok); color:#000; }
+button.nok { border-color:var(--nok); color:var(--nok); }
+button.nok:hover { background:var(--nok); color:#000; }
+button.flow { border-color:var(--flow); color:var(--flow); }
+button.flow:hover { background:var(--flow); color:#000; }
+button.holiday { border-color:var(--holiday); color:var(--holiday); }
+button.holiday:hover { background:var(--holiday); color:#000; }
+button.danger { border-color:#f44; color:#f44; }
+button.danger:hover { background:#f44; color:#000; }
 #popup {
-    display: none;
-    position: fixed;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #0a0a12;
-    border: 2px solid var(--gold);
-    border-radius: 10px;
-    padding: 16px 24px;
-    min-width: 300px;
-    max-width: 600px;
-    text-align: center;
-    z-index: 1000;
-    box-shadow: 0 0 40px rgba(255,215,61,0.1);
-    font-size: 12px;
-    color: var(--fg);
-    backdrop-filter: blur(10px);
+    display:none;
+    position:fixed;
+    bottom:80px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#0a0a12;
+    border:2px solid var(--gold);
+    border-radius:10px;
+    padding:16px 24px;
+    min-width:300px;
+    max-width:600px;
+    text-align:center;
+    z-index:1000;
+    box-shadow:0 0 40px rgba(255,215,61,0.1);
+    font-size:12px;
+    color:var(--fg);
+    backdrop-filter:blur(10px);
 }
 #popup .close-btn {
-    position: absolute;
-    top: 4px;
-    right: 8px;
-    color: #666;
-    cursor: pointer;
-    font-size: 14px;
+    position:absolute;
+    top:4px;
+    right:8px;
+    color:#666;
+    cursor:pointer;
+    font-size:14px;
 }
-#popup .close-btn:hover { color: #fff; }
-
-@media (max-width: 800px) {
-    main { grid-template-columns: 1fr; }
-    #panel { max-height: 180px; }
-    #rooms { grid-template-columns: 1fr 1fr; }
+#popup .close-btn:hover { color:#fff; }
+@media (max-width:800px) {
+    main { grid-template-columns:1fr; }
+    #panel { max-height:180px; }
+    #rooms { grid-template-columns:1fr 1fr; }
 }
 </style>
 </head>
@@ -242,29 +203,30 @@ button.danger:hover { background: #f44; color: #000; }
 
 <header>
     <h1>
-        <span class="holiday">🏖️ HOLIDAY</span>
-        <span style="color:#666;">·</span>
+        <span class="holiday">🏖️</span>
         <span class="suite">SUITE</span>
         <span style="color:#666;">·</span>
-        <span class="pop">POP</span>
+        <span style="color:var(--ok);">RESPO_81</span>
+        <span style="color:#666;">·</span>
+        <span style="color:var(--echo);">CSV</span>
     </h1>
     <div id="info-bar">
         <span id="clock">⏱️ --:--:--</span>
         <span id="state-display" style="color:var(--gold);">● bereit</span>
-        <span id="cycle-display" style="color:#666;">SUITE 0</span>
+        <span id="cycle-display" style="color:#666;">CYCLE 0</span>
     </div>
 </header>
 
 <main>
     <div id="canvas-wrap">
         <canvas id="suiteCanvas"></canvas>
-        <div id="canvas-overlay">
-            <span class="holiday">🏖️</span> HOLIDAY · LIVE · MIND · BRAIN · POP
+        <div id="canvas-overlay" style="position:absolute;bottom:8px;left:8px;font-size:7px;color:#444;pointer-events:none;background:rgba(0,0,0,0.7);padding:3px 8px;border-radius:3px;">
+            <span class="holiday">🏖️</span> SUITE · RESPO_81 · CSV · ENGINE
         </div>
     </div>
 
     <div id="panel">
-        <h3>🎯 SUITE · ROOMS · POP</h3>
+        <h3>🎯 SUITE · ROOMS · RESPONSE</h3>
 
         <div id="rooms">
             <div class="room-box active" data-room="LIVE">
@@ -290,16 +252,16 @@ button.danger:hover { background: #f44; color: #000; }
         </div>
 
         <div id="metrics">
-            <div class="metric ok"><div class="label">OK</div><div class="value" id="ok-value">0</div></div>
+            <div class="metric ok"><div class="label">81</div><div class="value" id="ok-value">0</div></div>
             <div class="metric flow"><div class="label">FLOW</div><div class="value" id="flow-value">0</div></div>
-            <div class="metric echo"><div class="label">ECHO</div><div class="value" id="echo-value">0</div></div>
+            <div class="metric echo"><div class="label">CSV</div><div class="value" id="echo-value">0</div></div>
             <div class="metric holiday"><div class="label">POP</div><div class="value" id="pop-value">0</div></div>
         </div>
 
         <div id="log">
-            <div class="entry"><span class="time">[INIT]</span> <span class="msg holiday">🏖️ HOLIDAY · SUITE · POP</span></div>
+            <div class="entry"><span class="time">[INIT]</span> <span class="msg holiday">🏖️ SUITE · RESPO_81 · CSV · ENGINE</span></div>
             <div class="entry"><span class="time">[INIT]</span> <span class="msg flow">LIVE · MIND · BRAIN · POP</span></div>
-            <div class="entry"><span class="time">[INIT]</span> <span class="msg ok">Response-Layer 7 bereit</span></div>
+            <div class="entry"><span class="time">[INIT]</span> <span class="msg ok">RESPO_81 + CSV_LEARNER verbunden</span></div>
         </div>
 
         <div id="controls">
@@ -307,10 +269,10 @@ button.danger:hover { background: #f44; color: #000; }
             <button class="ok" id="btn-ok">✅ OK</button>
             <button class="nok" id="btn-nok">❌ NOK</button>
             <button class="flow" id="btn-flow">🌊 FLOW</button>
-            <button class="root" id="btn-root">🌳 ROOT</button>
             <button class="holiday" id="btn-pop">💬 POP</button>
             <button class="danger" id="btn-reset">⟲ RESET</button>
             <button id="btn-auto">▶ AUTO</button>
+            <button id="btn-csv">📂 CSV</button>
         </div>
     </div>
 </main>
@@ -323,27 +285,250 @@ button.danger:hover { background: #f44; color: #000; }
 
 <script>
 // ============================================================
-// SUITE · HOLIDAY · LIVE · MIND · BRAIN · POP
+// ══════════════════════════════════════════════════════════════
+// 1. RESPO_81_FINDER (komplette Engine)
+// ══════════════════════════════════════════════════════════════
 // ============================================================
 
-// --- LAYER 7 ---
-var LAYER7 = ['OK', 'NOK', 'FLOW', 'BREAK', 'ECHO', 'VOID', 'ROOT'];
-var RESPONSES = {
-    OK:    { sym: '✅', label: 'OK',    desc: 'Zustimmung',   color: '#4f4', class: 'ok' },
-    NOK:   { sym: '❌', label: 'NOK',   desc: 'Ablehnung',    color: '#f44', class: 'nok' },
-    FLOW:  { sym: '🌊', label: 'FLOW',  desc: 'System fließt', color: '#4ff', class: 'flow' },
-    BREAK: { sym: '💥', label: 'BREAK', desc: 'System bricht', color: '#f4f', class: 'break' },
-    ECHO:  { sym: '🔄', label: 'ECHO',  desc: 'Spiegelung',   color: '#ff4', class: 'echo' },
-    VOID:  { sym: '◌',  label: 'VOID',  desc: 'Neutral',      color: '#666', class: 'void' },
-    ROOT:  { sym: '🌳', label: 'ROOT',  desc: 'Rückkehr',     color: '#ffd700', class: 'root' }
+const RESPO_81_FINDER = {
+
+    find81(input) {
+        const results = [];
+        const numbers = String(input).match(/\d+/g)?.map(Number) || [];
+
+        for (let i = 0; i < numbers.length; i++) {
+            for (let j = i + 1; j < numbers.length; j++) {
+                const sum = numbers[i] + numbers[j];
+                if (sum === 81) {
+                    results.push({ type: "PAIR", a: numbers[i], b: numbers[j], sum: 81 });
+                }
+                if (numbers[i] === 81) {
+                    results.push({ type: "SINGLE", value: 81 });
+                }
+            }
+        }
+
+        if (results.length === 0) {
+            const root = this.pqRoot(input);
+            if (root === 81 || root % 81 === 0) {
+                results.push({ type: "PQ_ROOT", value: root });
+            }
+        }
+
+        const triple81 = results.filter(r => r.value === 81 || r.sum === 81);
+        const count = triple81.length;
+
+        return {
+            found: triple81,
+            count: count,
+            is243: count >= 3,
+            status: count >= 3 ? "243 erreicht" : `${count}/3 × 81`
+        };
+    },
+
+    pqRoot(value) {
+        if (typeof value === "number") {
+            return Math.floor(Math.sqrt(value * value + 243) / 3);
+        }
+        return 0;
+    },
+
+    stationStatus(stationData) {
+        const defaults = { uptime: 0.8, errors: 0, load: 0.5, signal: 0.9, response: 0.85, sync: 0.7 };
+        const data = { ...defaults, ...stationData };
+
+        const weights = { uptime: 0.30, signal: 0.20, response: 0.20, sync: 0.15, load: 0.10, errors: 0.05 };
+        const errorPenalty = Math.min(data.errors * 0.05, 0.5);
+
+        let score = 0;
+        score += data.uptime * weights.uptime;
+        score += data.signal * weights.signal;
+        score += data.response * weights.response;
+        score += data.sync * weights.sync;
+        score += (1 - data.load) * weights.load;
+        score -= errorPenalty;
+
+        const percent = Math.max(0, Math.min(100, Math.round(score * 100)));
+
+        let status = "Kritisch";
+        if (percent >= 90) status = "Exzellent";
+        else if (percent >= 75) status = "Gut";
+        else if (percent >= 50) status = "Mittel";
+        else if (percent >= 30) status = "Schwach";
+
+        return { station: data.name || "Unbekannt", percent, status };
+    },
+
+    evaluate(input, stationData = {}) {
+        const find = this.find81(input);
+        const status = this.stationStatus(stationData);
+
+        const beneficial = [];
+        if (find.count >= 1) beneficial.push("81 gefunden → 243-Basis");
+        if (status.percent >= 75) beneficial.push("Stations-Qualität hoch → 243 begünstigt");
+        if (find.is243) beneficial.push("VOLLE 243 erreicht");
+
+        return {
+            input,
+            find81: find,
+            station: status,
+            beneficial,
+            summary: `Station ${status.station}: ${status.percent}% – ${status.status} | 81: ${find.count}/3`,
+            timestamp: Date.now()
+        };
+    }
 };
 
-// --- SUITE_BOARD ---
-var SUITE_BOARD = {
+// ============================================================
+// ══════════════════════════════════════════════════════════════
+// 2. RESPO_CSV_LEARNER
+// ══════════════════════════════════════════════════════════════
+// ============================================================
+
+const RESPO_CSV_LEARNER = {
+
+    assimilate(csvText) {
+        const lines = csvText.split('\n').filter(l => l.trim());
+        if (lines.length < 2) return { header: [], rows: [], structure: {}, assimilated: false };
+
+        const header = lines[0].split(',').map(h => h.trim());
+        const rows = lines.slice(1).map(line => {
+            const values = line.split(',').map(v => v.trim());
+            const obj = {};
+            header.forEach((h, i) => obj[h] = values[i] || '');
+            return obj;
+        });
+
+        const structure = this.extractStructure(rows, header);
+
+        return { header, rows, structure, assimilated: true, timestamp: Date.now() };
+    },
+
+    extractStructure(rows, header) {
+        const structure = { axis: [], narrative: [], values: [] };
+
+        rows.forEach(row => {
+            if (row.Achse || row.axis) {
+                structure.axis.push({
+                    name: row.Achse || row.axis,
+                    trans: row.TRANS || row.trans || 0,
+                    warb: row.WARB || row.warb || 0,
+                    kanal: row.KANAL || row.kanal || 0
+                });
+            }
+            if (row.Narrativ || row.narrativ) {
+                structure.narrative.push({ text: row.Narrativ || row.narrativ });
+            }
+            Object.keys(row).forEach(key => {
+                const val = parseFloat(row[key]);
+                if (!isNaN(val) && !['Achse','axis','Narrativ','narrativ','Dimension','dimension'].includes(key)) {
+                    structure.values.push({ key, value: val });
+                }
+            });
+        });
+
+        return structure;
+    },
+
+    learn(assimilated) {
+        const s = assimilated.structure;
+        const axisPatterns = s.axis.map(a => ({
+            name: a.name,
+            essence: (parseFloat(a.trans)||0) + (parseFloat(a.warb)||0) - (parseFloat(a.kanal)||0)
+        }));
+
+        const valuePatterns = s.values.reduce((acc, v) => {
+            if (!acc[v.key]) acc[v.key] = [];
+            acc[v.key].push(v.value);
+            return acc;
+        }, {});
+
+        return {
+            axisPatterns,
+            valuePatterns,
+            narrativeCount: s.narrative.length,
+            learned: true,
+            summary: { axisCount: s.axis.length, valueCount: s.values.length }
+        };
+    },
+
+    respond(learned, input) {
+        const bestAxis = learned.axisPatterns[0] || { name: 'undefiniert', essence: 0 };
+        return {
+            axis: bestAxis,
+            response: bestAxis.essence || 0,
+            status: bestAxis.essence > 0 ? 'POSITIV' : 'NEUTRAL'
+        };
+    },
+
+    pipeline(csvText, input = {}) {
+        const assimilated = this.assimilate(csvText);
+        if (!assimilated.assimilated) return { error: 'CSV leer oder ungültig' };
+        const learned = this.learn(assimilated);
+        const response = this.respond(learned, input);
+        return { assimilated, learned, response, pipeline: 'ASSIMILATE → LEARN → RESPOND' };
+    }
+};
+
+// ============================================================
+// ══════════════════════════════════════════════════════════════
+// 3. CAUSE.suite (Ursache-Engine)
+// ══════════════════════════════════════════════════════════════
+// ============================================================
+
+const CAUSE = {
+    state: { lastInput: null, lastRotation: null, timestamp: null },
+
+    DA(input) {
+        return { raw: input, type: typeof input, len: (""+input).length, stamp: Date.now() };
+    },
+
+    NE(da) {
+        const clean = (""+da.raw).replace(/[^\w\säöüÄÖÜ]/g, "").trim();
+        return { clean, neutral: clean.toLowerCase(), stamp: Date.now() };
+    },
+
+    BEN(ne) {
+        const score = ne.clean.length % 9 || 1;
+        return { meaning: ne.clean, score, polarity: score > 4 ? "POS" : "NEU", stamp: Date.now() };
+    },
+
+    KI(ben) {
+        return { impulse: ben.score * 3.14, mode: ben.polarity === "POS" ? "FLOW" : "CALM", stamp: Date.now() };
+    },
+
+    RETURN(ki) {
+        return { output: ki.impulse, mode: ki.mode, stamp: Date.now() };
+    },
+
+    rotate(input) {
+        const da = this.DA(input);
+        const ne = this.NE(da);
+        const ben = this.BEN(ne);
+        const ki = this.KI(ben);
+        const out = this.RETURN(ki);
+
+        this.state = { lastInput: input, lastRotation: { da, ne, ben, ki, out }, timestamp: Date.now() };
+        return this.state.lastRotation;
+    }
+};
+
+// ============================================================
+// ══════════════════════════════════════════════════════════════
+// 4. SUITE_BOARD – VERBINDET ALLES
+// ══════════════════════════════════════════════════════════════
+// ============================================================
+
+const SUITE_BOARD = {
+    name: "SUITE.board",
+    active: true,
     rooms: {},
     activeRoom: 'LIVE',
     response: 'OK',
     tick: 0,
+    cycle: 0,
+    csvData: null,
+    csvLearned: null,
 
     register: function(name, obj) {
         this.rooms[name] = obj;
@@ -360,19 +545,55 @@ var SUITE_BOARD = {
         }
     },
 
-    update: function(dt) {
-        this.tick += dt;
-        var room = this.get(this.activeRoom);
-        if (room && room.update) {
-            room.update(dt);
+    // ─── CYCLE: CAUSE + RESPO_81 + CSV ───
+    cycleEngine: function(input) {
+        this.tick++;
+        this.cycle++;
+
+        // 1. CAUSE – Ursache erkennen
+        const cause = CAUSE.rotate(input);
+
+        // 2. RESPO_81 – 81 finden
+        const station = { name: "SUITE-Station", uptime: 0.91, signal: 0.87, response: 0.94, sync: 0.79, load: 0.33, errors: 1 };
+        const respo81 = RESPO_81_FINDER.evaluate(input, station);
+
+        // 3. CSV – wenn geladen, lernen
+        let csvResult = null;
+        if (this.csvData) {
+            csvResult = RESPO_CSV_LEARNER.pipeline(this.csvData, { axis: 'X' });
+            this.csvLearned = csvResult;
         }
-        // Response rotieren
-        var idx = Math.floor(this.tick) % 7;
-        this.response = LAYER7[idx];
+
+        // 4. Layer 7 Response
+        const layer = ["OK","NOK","FLOW","BREAK","ECHO","VOID","ROOT"];
+        this.response = layer[Math.floor(this.tick) % 7];
+
+        return {
+            cycle: this.cycle,
+            cause,
+            respo81,
+            csv: csvResult,
+            response: this.response,
+            timestamp: Date.now()
+        };
+    },
+
+    // ─── CSV laden ───
+    loadCSV: async function(url) {
+        try {
+            const response = await fetch(url);
+            this.csvData = await response.text();
+            const result = RESPO_CSV_LEARNER.pipeline(this.csvData, { axis: 'X' });
+            this.csvLearned = result;
+            return result;
+        } catch(e) {
+            console.error('CSV Fehler:', e);
+            return null;
+        }
     },
 
     render: function() {
-        var room = this.get(this.activeRoom);
+        const room = this.get(this.activeRoom);
         if (room && room.render) {
             return room.render();
         }
@@ -380,115 +601,79 @@ var SUITE_BOARD = {
     }
 };
 
-// --- LIVE.room ---
-var LIVE_ROOM = {
-    active: false,
-    tick: 0,
-    response: 'ROOT',
+// ============================================================
+// ══════════════════════════════════════════════════════════════
+// 5. RÄUME – LIVE · MIND · BRAIN · POP
+// ══════════════════════════════════════════════════════════════
+// ============================================================
 
-    start: function() { this.active = true; this.tick = 0; },
-    stop: function() { this.active = false; },
-    update: function(dt) {
+// ─── LIVE.room ───
+const LIVE_ROOM = {
+    active: false, tick: 0, response: "ROOT",
+    start() { this.active = true; this.tick = 0; },
+    stop() { this.active = false; },
+    update(dt) {
         if (!this.active) return;
         this.tick += dt;
-        this.response = LAYER7[Math.floor(this.tick) % 7];
+        const layer = ["OK","NOK","FLOW","BREAK","ECHO","VOID","ROOT"];
+        this.response = layer[Math.floor(this.tick) % 7];
     },
-    render: function() {
-        return { mode: 'LIVE.room', tick: this.tick, response: this.response };
-    }
+    render() { return { mode: "LIVE.room", tick: this.tick, response: this.response }; }
 };
 SUITE_BOARD.register('LIVE', LIVE_ROOM);
 
-// --- MIND.room ---
-var MIND_ROOM = {
-    active: false,
-    thought: '',
-    response: 'ROOT',
-
-    start: function() { this.active = true; this.thought = 'mind.init'; },
-    stop: function() { this.active = false; },
-    think: function(input) {
+// ─── MIND.room ───
+const MIND_ROOM = {
+    active: false, thought: "", response: "ROOT",
+    layer7: ["OK","NOK","FLOW","BREAK","ECHO","VOID","ROOT"],
+    start() { this.active = true; this.thought = "mind.init"; },
+    stop() { this.active = false; },
+    think(input) {
         if (!this.active) return;
-        this.thought = 'mind:' + input;
-        var idx = input.length % 7;
-        this.response = LAYER7[idx];
+        this.thought = "mind:" + input;
+        this.response = this.layer7[input.length % 7];
     },
-    render: function() {
-        return { mode: 'mind.room', thought: this.thought, response: this.response };
-    }
+    render() { return { mode: "mind.room", thought: this.thought, response: this.response }; }
 };
 SUITE_BOARD.register('MIND', MIND_ROOM);
 
-// --- BRAIN.room ---
-var BRAIN_ROOM = {
-    active: false,
-    input: '',
-    output: '',
-    response: 'ROOT',
-
-    start: function() { this.active = true; this.output = 'brain.init'; },
-    stop: function() { this.active = false; },
-    process: function(input) {
+// ─── BRAIN.room ───
+const BRAIN_ROOM = {
+    active: false, input: "", output: "", response: "ROOT",
+    layer7: ["OK","NOK","FLOW","BREAK","ECHO","VOID","ROOT"],
+    start() { this.active = true; this.output = "brain.init"; },
+    stop() { this.active = false; },
+    process(input) {
         if (!this.active) return;
         this.input = input;
-        this.output = 'brain:' + input.split('').reverse().join('');
-        var sum = 0;
-        for (var i = 0; i < input.length; i++) {
-            sum += input.charCodeAt(i);
-        }
-        this.response = LAYER7[sum % 7];
+        this.output = "brain:" + input.split("").reverse().join("");
+        const sum = [...input].reduce((a,c)=>a+c.charCodeAt(0),0);
+        this.response = this.layer7[sum % 7];
     },
-    render: function() {
-        return { mode: 'brain.room', input: this.input, output: this.output, response: this.response };
-    }
+    render() { return { mode: "brain.room", input: this.input, output: this.output, response: this.response }; }
 };
 SUITE_BOARD.register('BRAIN', BRAIN_ROOM);
 
-// --- SUITE_POP ---
-var SUITE_POP = {
-    active: false,
-    editing: false,
-    original: '',
-    workingCopy: '',
-    response: '',
-    color: '#0f0',
-    styles: {
-        OK: '#00ff00',
-        NOK: '#ff0000',
-        FLOW: '#00ffff',
-        BREAK: '#ff8800',
-        ECHO: '#8888ff',
-        VOID: '#444444',
-        ROOT: '#ffffff'
-    },
-
-    openEdit: function(msg, resp) {
-        this.active = true;
-        this.editing = true;
-        this.original = msg;
-        this.workingCopy = msg;
-        this.response = resp || 'OK';
-        this.color = this.styles[this.response] || '#0f0';
-        this.renderPopup();
+// ─── POP ───
+const SUITE_POP = {
+    active: false, editing: false, original: "", workingCopy: "", response: "", color: "#0f0",
+    styles: { OK: "#00ff00", NOK: "#ff0000", FLOW: "#00ffff", BREAK: "#ff8800", ECHO: "#8888ff", VOID: "#444444", ROOT: "#ffffff" },
+    openEdit(msg, resp) {
+        this.active = true; this.editing = true;
+        this.original = msg; this.workingCopy = msg;
+        this.response = resp || "OK";
+        this.color = this.styles[this.response] || "#0f0";
+        this.render();
         document.getElementById('popup').style.display = 'block';
     },
-
-    edit: function(fn) {
-        if (!this.editing) return;
-        this.workingCopy = fn(this.workingCopy);
-        this.renderPopup();
-    },
-
-    closeEdit: function() {
-        this.active = false;
-        this.editing = false;
+    closeEdit() {
+        this.active = false; this.editing = false;
         document.getElementById('popup').style.display = 'none';
     },
-
-    renderPopup: function() {
-        var box = document.getElementById('popup-content');
-        var mode = this.editing ? '✏️ open.edit' : '📋 closed.edit';
-        var text = this.editing ? this.workingCopy : this.original;
+    render() {
+        const box = document.getElementById('popup-content');
+        const mode = this.editing ? '✏️ open.edit' : '📋 closed.edit';
+        const text = this.editing ? this.workingCopy : this.original;
         box.textContent = this.response + ' / ' + mode + ': ' + text;
         box.style.color = this.color;
     }
@@ -496,15 +681,18 @@ var SUITE_POP = {
 SUITE_BOARD.register('POP', SUITE_POP);
 
 // ============================================================
-// CANVAS SETUP
+// ══════════════════════════════════════════════════════════════
+// 6. CANVAS SETUP
+// ══════════════════════════════════════════════════════════════
 // ============================================================
-var canvas = document.getElementById('suiteCanvas');
-var ctx = canvas.getContext('2d');
-var W, H, cx, cy, radius;
+
+const canvas = document.getElementById('suiteCanvas');
+const ctx = canvas.getContext('2d');
+let W, H, cx, cy, radius;
 
 function resizeCanvas() {
-    var wrap = document.getElementById('canvas-wrap');
-    var rect = wrap.getBoundingClientRect();
+    const wrap = document.getElementById('canvas-wrap');
+    const rect = wrap.getBoundingClientRect();
     canvas.width = rect.width;
     canvas.height = rect.height;
     W = canvas.width; H = canvas.height;
@@ -515,134 +703,78 @@ resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
 // ============================================================
-// STATE
+// ══════════════════════════════════════════════════════════════
+// 7. STATE & RENDER
+// ══════════════════════════════════════════════════════════════
 // ============================================================
-var state = {
+
+const state = {
     running: false,
     autoMode: false,
     cycle: 0,
     t: 0,
     activeRoom: 'LIVE',
     board: SUITE_BOARD,
-    popCount: 0
+    popCount: 0,
+    lastCycleResult: null
 };
 
-// ============================================================
-// LOG
-// ============================================================
 function log(msg, type) {
-    var logDiv = document.getElementById('log');
-    var entry = document.createElement('div');
+    const logDiv = document.getElementById('log');
+    const entry = document.createElement('div');
     entry.className = 'entry';
-    var time = new Date().toLocaleTimeString();
-    var cls = type === 'ok' ? 'ok' : type === 'nok' ? 'nok' :
-              type === 'flow' ? 'flow' : type === 'break' ? 'break' :
-              type === 'echo' ? 'echo' : type === 'void' ? 'void' :
-              type === 'root' ? 'root' : type === 'holiday' ? 'holiday' : '';
+    const time = new Date().toLocaleTimeString();
+    const cls = type || '';
     entry.innerHTML = '<span class="time">[' + time + ']</span> <span class="msg ' + cls + '">' + msg + '</span>';
     logDiv.appendChild(entry);
     logDiv.scrollTop = logDiv.scrollHeight;
     while (logDiv.children.length > 50) logDiv.removeChild(logDiv.firstChild);
 }
 
-// ============================================================
-// KERN-FUNKTIONEN
-// ============================================================
-
 function activateRoom(key) {
     state.activeRoom = key;
     state.board.setActive(key);
-    var els = document.querySelectorAll('.room-box');
-    for (var i = 0; i < els.length; i++) {
-        var el = els[i];
-        if (el.getAttribute('data-room') === key) {
-            el.classList.add('active');
-        } else {
-            el.classList.remove('active');
-        }
+    const els = document.querySelectorAll('.room-box');
+    for (let i = 0; i < els.length; i++) {
+        els[i].classList.toggle('active', els[i].getAttribute('data-room') === key);
     }
-
-    // Raum starten
-    var room = state.board.get(key);
-    if (room && room.start) {
-        room.start();
-    }
-
-    var msg = '🏖️ ' + key + '.room aktiv';
-    log(msg, 'holiday');
-
-    // Metriken
-    var counts = { OK: 0, FLOW: 0, ECHO: 0, POP: 0 };
-    var resp = state.board.response || 'OK';
-    counts[resp] = (counts[resp] || 0) + 1;
-    document.getElementById('ok-value').textContent = counts.OK;
-    document.getElementById('flow-value').textContent = counts.FLOW;
-    document.getElementById('echo-value').textContent = counts.ECHO;
-    document.getElementById('pop-value').textContent = state.popCount;
+    const room = state.board.get(key);
+    if (room && room.start) room.start();
+    log('🏖️ ' + key + '.room aktiv', 'holiday');
 }
 
 function popOpen() {
     state.popCount++;
-    var msgs = ['Hallo Welt!', '🏖️ Holiday Time!', '💬 POP ist da!', '🧠 MIND sagt Hallo!', '💡 BRAIN leuchtet!'];
-    var msg = msgs[state.popCount % msgs.length];
-    var resp = LAYER7[state.popCount % 7];
+    const msgs = ['Hallo Welt!', '🏖️ Holiday Time!', '💬 POP ist da!', '🧠 MIND sagt Hallo!', '💡 BRAIN leuchtet!'];
+    const msg = msgs[state.popCount % msgs.length];
+    const layer = ["OK","NOK","FLOW","BREAK","ECHO","VOID","ROOT"];
+    const resp = layer[state.popCount % 7];
     SUITE_POP.openEdit(msg, resp);
     log('💬 POP geöffnet: ' + msg, 'echo');
     document.getElementById('pop-value').textContent = state.popCount;
 }
 
-function popClose() {
-    SUITE_POP.closeEdit();
-    log('💬 POP geschlossen', 'echo');
-}
-
-// ============================================================
-// RENDER
-// ============================================================
 function render() {
     ctx.clearRect(0, 0, W, H);
 
-    var grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, W * 0.6);
+    // Background
+    const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, W * 0.6);
     grad.addColorStop(0, '#0a0a1a');
     grad.addColorStop(1, '#000');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
 
-    drawRooms();
-    drawLayer7();
-    drawResponse();
+    // ─── Draw Rooms ───
+    const r = radius * 0.4;
+    const rooms = ['LIVE', 'MIND', 'BRAIN', 'POP'];
+    const colors = ['#ff6b6b', '#ffd93d', '#6b6bff', '#ff69b4'];
+    const syms = ['🔴', '🧠', '💡', '💬'];
 
-    state.t += 0.008;
-    if (state.running) {
-        state.cycle++;
-        state.board.update(0.016);
-        if (state.cycle % 50 === 0) {
-            var rooms = ['LIVE', 'MIND', 'BRAIN', 'POP'];
-            var idx = Math.floor(Math.random() * rooms.length);
-            activateRoom(rooms[idx]);
-        }
-        document.getElementById('cycle-display').textContent = 'SUITE ' + state.cycle;
-    }
-
-    requestAnimationFrame(render);
-}
-render();
-
-// ============================================================
-// ZEICHEN-FUNKTIONEN
-// ============================================================
-
-function drawRooms() {
-    var r = radius * 0.4;
-    var rooms = ['LIVE', 'MIND', 'BRAIN', 'POP'];
-    var colors = ['#ff6b6b', '#ffd93d', '#6b6bff', '#ff69b4'];
-    var syms = ['🔴', '🧠', '💡', '💬'];
-
-    for (var i = 0; i < rooms.length; i++) {
-        var angle = (i / rooms.length) * Math.PI * 2 + state.t * 0.02;
-        var x = cx + Math.cos(angle) * r;
-        var y = cy + Math.sin(angle) * r;
-        var isActive = rooms[i] === state.activeRoom;
+    for (let i = 0; i < rooms.length; i++) {
+        const angle = (i / rooms.length) * Math.PI * 2 + state.t * 0.02;
+        const x = cx + Math.cos(angle) * r;
+        const y = cy + Math.sin(angle) * r;
+        const isActive = rooms[i] === state.activeRoom;
 
         ctx.fillStyle = isActive ? colors[i] + '44' : colors[i] + '11';
         ctx.shadowColor = isActive ? colors[i] : 'transparent';
@@ -664,111 +796,99 @@ function drawRooms() {
         ctx.fillText(rooms[i], x, y + 14);
     }
 
-    // Verbindungen
-    ctx.strokeStyle = 'rgba(255,215,61,0.03)';
-    ctx.lineWidth = 0.5;
-    for (var i = 0; i < rooms.length; i++) {
-        var a = (i / rooms.length) * Math.PI * 2 + state.t * 0.02;
-        var x1 = cx + Math.cos(a) * r;
-        var y1 = cy + Math.sin(a) * r;
-        for (var j = i + 1; j < rooms.length; j++) {
-            var b = (j / rooms.length) * Math.PI * 2 + state.t * 0.02;
-            var x2 = cx + Math.cos(b) * r;
-            var y2 = cy + Math.sin(b) * r;
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.stroke();
-        }
-    }
-}
+    // ─── Draw Layer 7 ───
+    const r2 = radius * 0.7;
+    const n = 7;
+    const lcolors = ['#4f4', '#f44', '#4ff', '#f4f', '#ff4', '#666', '#ffd700'];
+    const labels = ['OK', 'NOK', 'FLOW', 'BREAK', 'ECHO', 'VOID', 'ROOT'];
 
-function drawLayer7() {
-    var r = radius * 0.7;
-    var n = 7;
-    var colors = ['#4f4', '#f44', '#4ff', '#f4f', '#ff4', '#666', '#ffd700'];
-    var labels = ['OK', 'NOK', 'FLOW', 'BREAK', 'ECHO', 'VOID', 'ROOT'];
+    for (let i = 0; i < n; i++) {
+        const angle = (i / n) * Math.PI * 2 + state.t * 0.01;
+        const x = cx + Math.cos(angle) * r2;
+        const y = cy + Math.sin(angle) * r2;
+        const isActive = labels[i] === state.board.response;
 
-    for (var i = 0; i < n; i++) {
-        var angle = (i / n) * Math.PI * 2 + state.t * 0.01;
-        var x = cx + Math.cos(angle) * r;
-        var y = cy + Math.sin(angle) * r;
-        var isActive = labels[i] === state.board.response;
-
-        ctx.fillStyle = isActive ? colors[i] + '44' : colors[i] + '11';
-        ctx.shadowColor = isActive ? colors[i] : 'transparent';
+        ctx.fillStyle = isActive ? lcolors[i] + '44' : lcolors[i] + '11';
+        ctx.shadowColor = isActive ? lcolors[i] : 'transparent';
         ctx.shadowBlur = isActive ? 10 : 0;
         ctx.beginPath();
         ctx.arc(x, y, isActive ? 6 : 3, 0, Math.PI * 2);
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        ctx.fillStyle = isActive ? colors[i] : '#333';
+        ctx.fillStyle = isActive ? lcolors[i] : '#333';
         ctx.font = isActive ? '5px Consolas' : '4px Consolas';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'bottom';
         ctx.fillText(labels[i], x, y - 6);
     }
 
-    ctx.fillStyle = 'rgba(255,215,61,0.03)';
-    ctx.font = '5px Consolas';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    ctx.fillText('Layer 7', cx, cy + r + 8);
-}
+    // ─── Draw Response Center ───
+    const resp = state.board.response || 'OK';
+    const rObj = { OK: { sym: '✅', color: '#4f4' }, NOK: { sym: '❌', color: '#f44' }, FLOW: { sym: '🌊', color: '#4ff' }, BREAK: { sym: '💥', color: '#f4f' }, ECHO: { sym: '🔄', color: '#ff4' }, VOID: { sym: '◌', color: '#666' }, ROOT: { sym: '🌳', color: '#ffd700' } };
+    const rc = rObj[resp] || rObj.OK;
 
-function drawResponse() {
-    var resp = state.board.response || 'OK';
-    var r = RESPONSES[resp] || RESPONSES.OK;
-    var cr = radius * 0.1;
-
-    ctx.fillStyle = r.color + '22';
-    ctx.shadowColor = r.color;
+    ctx.fillStyle = rc.color + '22';
+    ctx.shadowColor = rc.color;
     ctx.shadowBlur = 20;
     ctx.beginPath();
-    ctx.arc(cx, cy, cr + 15, 0, Math.PI * 2);
+    ctx.arc(cx, cy, radius * 0.1 + 15, 0, Math.PI * 2);
     ctx.fill();
     ctx.shadowBlur = 0;
 
-    ctx.fillStyle = r.color;
-    ctx.shadowColor = r.color;
+    ctx.fillStyle = rc.color;
+    ctx.shadowColor = rc.color;
     ctx.shadowBlur = 30;
     ctx.font = '32px Consolas';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(r.sym, cx, cy - 2);
+    ctx.fillText(rc.sym, cx, cy - 2);
     ctx.shadowBlur = 0;
 
     ctx.fillStyle = '#666';
     ctx.font = '6px Consolas';
     ctx.textBaseline = 'top';
-    ctx.fillText(r.label + ' · ' + r.desc, cx, cy + 28);
+    ctx.fillText(resp + ' · ' + state.activeRoom, cx, cy + 28);
 
-    // Status
-    ctx.fillStyle = 'rgba(255,255,255,0.02)';
-    ctx.fillRect(8, 8, 80, 14);
-    ctx.fillStyle = '#444';
-    ctx.font = '4px Consolas';
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'top';
-    ctx.fillText('▶ ' + state.activeRoom, 12, 10);
+    // ─── Update ───
+    state.t += 0.008;
+    if (state.running) {
+        state.cycle++;
+        const result = state.board.cycleEngine(state.cycle);
+        state.lastCycleResult = result;
+
+        // Metriken updaten
+        document.getElementById('ok-value').textContent = result.respo81.find81.count;
+        document.getElementById('flow-value').textContent = result.respo81.station.percent || 0;
+        document.getElementById('echo-value').textContent = result.csv ? result.csv.learned.summary.valueCount : 0;
+        document.getElementById('cycle-display').textContent = 'CYCLE ' + state.cycle;
+
+        // Log (nur alle 10 Cycles)
+        if (state.cycle % 10 === 0) {
+            log('🔄 CYCLE ' + state.cycle + ' · 81: ' + result.respo81.find81.count + '/3 · ' + result.respo81.station.percent + '%', 'flow');
+        }
+
+        if (result.respo81.find81.is243) {
+            log('🎯 243 erreicht!', 'ok');
+        }
+    }
+
+    requestAnimationFrame(render);
 }
+render();
 
 // ============================================================
-// CONTROLS
+// ══════════════════════════════════════════════════════════════
+// 8. CONTROLS
+// ══════════════════════════════════════════════════════════════
 // ============================================================
+
 document.getElementById('btn-start').onclick = function() {
     state.running = !state.running;
     this.textContent = state.running ? '⏸ STOP' : '▶ START';
     document.getElementById('state-display').textContent = state.running ? '● läuft' : '● gestoppt';
     document.getElementById('state-display').style.color = state.running ? 'var(--gold)' : '#666';
-    if (state.running) {
-        var room = state.board.get(state.activeRoom);
-        if (room && room.start) room.start();
-        log('▶ SUITE gestartet', 'holiday');
-    } else {
-        log('⏸ SUITE gestoppt', 'holiday');
-    }
+    log(state.running ? '▶ SUITE gestartet' : '⏸ SUITE gestoppt', 'holiday');
 };
 
 document.getElementById('btn-ok').onclick = function() {
@@ -783,18 +903,8 @@ document.getElementById('btn-flow').onclick = function() {
     state.board.response = 'FLOW';
     log('🌊 FLOW', 'flow');
 };
-document.getElementById('btn-root').onclick = function() {
-    state.board.response = 'ROOT';
-    log('🌳 ROOT', 'root');
-};
-
-document.getElementById('btn-pop').onclick = function() {
-    popOpen();
-};
-
-document.getElementById('popup-close').onclick = function() {
-    popClose();
-};
+document.getElementById('btn-pop').onclick = popOpen;
+document.getElementById('popup-close').onclick = function() { SUITE_POP.closeEdit(); };
 
 document.getElementById('btn-reset').onclick = function() {
     state.running = false;
@@ -802,19 +912,16 @@ document.getElementById('btn-reset').onclick = function() {
     state.t = 0;
     state.popCount = 0;
     state.board.response = 'OK';
+    state.board.csvData = null;
+    state.board.csvLearned = null;
     document.getElementById('btn-start').textContent = '▶ START';
     document.getElementById('state-display').textContent = '● reset';
     document.getElementById('state-display').style.color = '#f44';
-    document.getElementById('cycle-display').textContent = 'SUITE 0';
+    document.getElementById('cycle-display').textContent = 'CYCLE 0';
     document.getElementById('ok-value').textContent = '0';
     document.getElementById('flow-value').textContent = '0';
     document.getElementById('echo-value').textContent = '0';
     document.getElementById('pop-value').textContent = '0';
-    var els = document.querySelectorAll('.room-box');
-    for (var i = 0; i < els.length; i++) {
-        els[i].classList.remove('active');
-    }
-    document.querySelector('.room-box[data-room="LIVE"]').classList.add('active');
     SUITE_POP.closeEdit();
     log('⟲ RESET — SUITE zurückgesetzt', 'holiday');
 };
@@ -829,11 +936,10 @@ document.getElementById('btn-auto').onclick = function() {
         document.getElementById('state-display').style.color = 'var(--gold)';
         if (window.autoInterval) clearInterval(window.autoInterval);
         window.autoInterval = setInterval(function() {
-            var rooms = ['LIVE', 'MIND', 'BRAIN', 'POP'];
-            var idx = Math.floor(Math.random() * rooms.length);
+            const rooms = ['LIVE', 'MIND', 'BRAIN', 'POP'];
+            const idx = Math.floor(Math.random() * rooms.length);
             activateRoom(rooms[idx]);
-            if (rooms[idx] === 'POP') { popOpen(); }
-            log('🔄 ' + rooms[idx] + ' · ' + state.board.response, 'holiday');
+            if (rooms[idx] === 'POP') popOpen();
         }, 3000);
         log('▶ AUTO · SUITE rotiert', 'holiday');
     } else {
@@ -842,56 +948,58 @@ document.getElementById('btn-auto').onclick = function() {
     }
 };
 
-// ============================================================
-// ROOM-KLICKS
-// ============================================================
-var roomEls = document.querySelectorAll('.room-box');
-for (var i = 0; i < roomEls.length; i++) {
-    roomEls[i].onclick = function() {
-        var key = this.getAttribute('data-room');
-        activateRoom(key);
-    };
-}
+// ─── CSV laden ───
+document.getElementById('btn-csv').onclick = async function() {
+    log('📂 Lade CSV von GitHub...', 'echo');
+    const result = await SUITE_BOARD.loadCSV('https://raw.githubusercontent.com/iki1uc/BOOM/main/4X/achse-bedeutung-4.csv');
+    if (result) {
+        log('📂 CSV geladen! ' + result.learned.summary.valueCount + ' Werte, ' + result.learned.summary.axisCount + ' Achsen', 'ok');
+        document.getElementById('echo-value').textContent = result.learned.summary.valueCount;
+    } else {
+        log('❌ CSV Fehler', 'nok');
+    }
+};
 
-// ============================================================
-// TASTATUR
-// ============================================================
+// ─── Room Klicks ───
+document.querySelectorAll('.room-box').forEach(el => {
+    el.onclick = function() {
+        activateRoom(this.getAttribute('data-room'));
+    };
+});
+
+// ─── Tastatur ───
 document.addEventListener('keydown', function(e) {
     if (e.key === ' ') { e.preventDefault(); document.getElementById('btn-start').click(); }
     if (e.key === '1') activateRoom('LIVE');
     if (e.key === '2') activateRoom('MIND');
     if (e.key === '3') activateRoom('BRAIN');
     if (e.key === '4') { activateRoom('POP'); popOpen(); }
-    if (e.key === 'p') { popOpen(); }
+    if (e.key === 'p') popOpen();
     if (e.key === 'x') document.getElementById('btn-reset').click();
     if (e.key === 'a') document.getElementById('btn-auto').click();
+    if (e.key === 'c') document.getElementById('btn-csv').click();
 });
 
-// ============================================================
-// UHR
-// ============================================================
+// ─── Uhr ───
 function updateClock() {
     document.getElementById('clock').textContent = '⏱️ ' + new Date().toLocaleTimeString();
 }
 setInterval(updateClock, 1000);
 updateClock();
 
-// ============================================================
-// INIT
-// ============================================================
-log('🏖️ HOLIDAY · SUITE · POP geladen', 'holiday');
+// ─── INIT ───
+log('🏖️ SUITE · RESPO_81 · CSV · ENGINE geladen', 'holiday');
 log('📦 LIVE · MIND · BRAIN · POP', 'flow');
-log('⌨️  1=LIVE 2=MIND 3=BRAIN 4=POP  p=Pop  x=Reset  a=Auto', 'holiday');
+log('⌨️  1=LIVE 2=MIND 3=BRAIN 4=POP  p=Pop  c=CSV  x=Reset  a=Auto', 'holiday');
 
 setTimeout(function() {
     state.running = true;
     document.getElementById('btn-start').textContent = '⏸ STOP';
     document.getElementById('state-display').textContent = '● läuft';
     document.getElementById('state-display').style.color = 'var(--gold)';
-    var room = state.board.get('LIVE');
-    if (room && room.start) room.start();
     log('▶ SUITE automatisch gestartet · 🏖️ Holiday!', 'holiday');
 }, 500);
 </script>
+
 </body>
 </html>
