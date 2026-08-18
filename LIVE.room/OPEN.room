@@ -1,1 +1,50 @@
+// OPEN.room — LIVE Raum für SUITE
+// Status: ACTIVE
+// Rolle: Durchlassraum für WORK, FORK, SLI.raw, RESPO
+
+export const OPEN_ROOM = {
+
+    name: "OPEN.room",
+    state: {
+        active: true,
+        users: [],
+        stream: [],
+        lastEvent: null
+    },
+
+    // Nutzer betreten den Raum
+    enter(user) {
+        this.state.users.push(user);
+        this.state.lastEvent = `ENTER:${user}`;
+        return this.state;
+    },
+
+    // Nutzer verlassen den Raum
+    leave(user) {
+        this.state.users = this.state.users.filter(u => u !== user);
+        this.state.lastEvent = `LEAVE:${user}`;
+        return this.state;
+    },
+
+    // Daten streamen (WORK, FORK, SLI, RESPO)
+    push(data) {
+        this.state.stream.push({
+            timestamp: Date.now(),
+            data
+        });
+        this.state.lastEvent = "STREAM";
+        return this.state;
+    },
+
+    // Raumstatus abrufen
+    status() {
+        return {
+            name: this.name,
+            active: this.state.active,
+            users: this.state.users.length,
+            events: this.state.stream.length,
+            lastEvent: this.state.lastEvent
+        };
+    }
+};
 
